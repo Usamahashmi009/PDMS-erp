@@ -1,0 +1,251 @@
+{% extends 'base/base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Property List</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <style>
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background-color: #f0f3f4;
+        }
+
+        .container {
+            margin-top: 20px;
+        }
+
+      H5{
+        color: gray;
+        font-weight: bold;
+      }
+
+        th, td {
+            text-align: center;
+            padding: 15px;
+        }
+
+        th {
+            background-color: whitesmoke;
+            color: #ecf0f1;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .table tbody tr:hover {
+            background-color: #ecf0f1;
+        }
+
+        .btn-link {
+            color: #3498db;
+        }
+
+        .btn-link:hover {
+            text-decoration: underline;
+        }
+
+        .btn-primary {
+            background-color: #3498db;
+            border-color: #3498db;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            font-size: 14px; /* Adjust the font size here */
+            padding: 8px 16px; /* Adjust the padding here */
+        }
+
+        .btn-primary:hover {
+            background-color: #2980b9;
+            border-color: #2980b9;
+        }
+
+        .modal-header {
+            background-color: whitesmoke;
+            color: #ecf0f1;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .modal-body img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 767px) {
+            th, td {
+                padding: 10px;
+            }
+
+            .btn-link, .btn-primary {
+                width: 100%;
+                margin-bottom: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    {% block content %}
+    <div class="container mt-5">
+        <p>Purpose: <b>{{ persontype }}</b></p>
+        <p>Name: <b>{{ profile_name }}</b></p>
+
+        <div class="container mt-5">
+            <div class="main-content">
+                <div class="container mt-7">
+                    <!-- Table -->
+                    <div class="row">
+                        <div class="col">
+                            <div class="card shadow">
+                                <div class="card-header  ">
+                                    <h5 >Profile detail</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-striped">
+                                            <thead class="thead-light">
+                                                <tr>
+                                                    <th>Property Type</th>
+                                                    <th>Size</th>
+                                                    <th>Location</th>
+                                                    <th>Email</th>
+                                                    <th>Price range</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>{{ prop_type }}</td>
+                                                    <td>{{ plot_size }}</td>
+                                                    <td>{{ location }}</td>
+                                                    <td>{{ profile_name.email }}</td>
+                                                    <td>{{ price_from }} - {{ price_to }}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br><br>
+
+        <div class="container mt-5">
+            <div class="main-content">
+                <div class="container mt-7">
+                    <!-- Table -->
+                    <div class="row">
+                        <div class="col">
+                            <div class="card shadow">
+                                <div class="card-header border-0 ">
+                                    <h5 class="mb-0">Suggestions</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-striped">
+                                            <thead class="thead-light">
+                                                <tr>
+                                                    <th>Purpose</th>
+                                                    <th>Name</th>
+                                                    <th>Size</th>
+                                                    <th>Price range </th>
+                                                    <th>Contact</th>
+                                                    <th>Funnel</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for suggestion in suggestions %}
+                                                <tr>
+                                                    <td>{{ suggestion.persontype }}</td>
+                                                    <td>{{ suggestion.profile_names }}</td>
+                                                    <td>{{ suggestion.prop_size }}</td>
+                                                    <td>{{ suggestion.price_from }} - {{ suggestion.price_to }}</td>
+                                                    <td>{{ suggestion.profile_names.mobile1 }}<br> {{ suggestion.profile_names.mobile2 }} <br> {{ suggestion.profile_names.landline }}</td>
+                                                    <td>
+                                                    <a href="{% url 'blog:crm_details' suggestion.id %}" class="btn btn-primary btn-sm">
+                                                        Funnel
+                                                    </a>
+                                                    </td>
+                                                </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                        {% if remaining_data %}
+                                        <br><br>
+                                        <h3>Remaining Data</h3>
+                                            <!-- Filter Form -->
+                                            <form method="GET" action="{% if property_instance.id %}{% url 'blog:view_profile_details' property_instance.id persontype %}{% endif %}">
+
+                                        <div class="form-row">
+                                            <!-- Existing filters -->
+                                            <div class="form-group col-md-2">
+                                                <label for="price_from">Price From:</label>
+                                                <input type="text" class="form-control" name="price_from" value="{{ price_from }}">
+                                            </div>
+                                            <div class="form-group col-md-2">
+                                                <label for="price_to">Price To:</label>
+                                                <input type="text" class="form-control" name="price_to" value="{{ price_to }}">
+                                            </div>
+                                            <!-- ... Add other existing filters ... -->
+
+                                            <!-- New search filters -->
+                                            <div class="form-group col-md-2">
+                                                <label for="search_filters">Person type:</label>
+                                                <input type="text" class="form-control" name="persontype" value="{{ request.GET.persontype }}">
+                                            </div>
+                                            <div class="form-group col-md-2">
+                                                <label for="profile_names">Profile Names:</label>
+                                                <input type="text" class="form-control" name="profile_names" value="{{ request.GET.profile_names }}">
+                                            </div>
+                                            <!-- ... Add other new search filters ... -->
+
+                                            <div class="form-group col-md-2">
+                                                <button type="submit" class="btn btn-primary mt-4">Apply Filters</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                        
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered table-hover">
+                                                <thead class="thead-light">
+                                                    <tr>
+                                                        <th>Name</th>
+                                                        <th>Purpose</th>
+                                                        <th>Property Type</th>
+                                                        <th>Location</th>
+                                                        <th>Price range</th>
+                                                        <th>View</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {% for data in remaining_data %}
+                                                    <tr>
+                                                        <td>{{ data.profile_names }}</td>
+                                                        <td>{{ data.persontype }}</td>
+                                                        <td>{{ data.prop_type }}</td>
+                                                        <td>{{ data.location }}</td>
+                                                        <td>{{ data.price_from }} - {{ data.price_to }}</td>
+                                                        <td>
+                                                            <a href="{% url 'blog:view_profile_details' data.id data.persontype %}" class="btn btn-primary">
+                                                                View
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                    {% endfor %}
+                                                </tbody>
+                                            </table>
+                                            {% else %}
+                                            <p>No remaining data available.</p>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endblock %}
+    </body>
+    </html>

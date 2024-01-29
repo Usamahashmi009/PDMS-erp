@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Scroll Down Button</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600&display=swap" rel="stylesheet" />
+<!-- Stylesheet -->
+<style>
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+section {
+  height: 100vh;
+  position: relative;
+}
+
+#section-1 {
+  background-image: url('https://i2.wp.com/dnahotels.com/wp-content/uploads/2019/08/a16.jpg?ssl=1'); /* Add your background image URL here */
+  background-size: cover;
+  background-position: center;
+}
+
+a#scroll-btn {
+  position: absolute;
+  height: 10em;
+  width: 6.25em;
+  border: 0.5em solid #ffffff;
+  margin: auto;
+  left: 0;
+  right: 0;
+  bottom: 6.25em;
+  border-radius: 3em;
+}
+
+a#scroll-btn:before {
+  position: absolute;
+  content: "";
+  margin: auto;
+  left: 0;
+  right: 0;
+  top: 1.2em;
+  height: 1.2em;
+  width: 1.2em;
+  background-color: #ffffff;
+  border-radius: 50%;
+  animation: move-down 2s infinite;
+}
+
+@keyframes move-down {
+  80% {
+    opacity: 0.5;
+  }
+  100% {
+    transform: translateY(5.3em);
+    opacity: 0;
+  }
+}
+
+a#scroll-btn:after {
+  position: absolute;
+  content: "SCROLL DOWN";
+  width: 12em;
+  display: block;
+  width: 12em;
+  text-align: center;
+  left: -4.2em;
+  bottom: -2.5em;
+  font-size: 1.6em;
+  color: #ffffff;
+  letter-spacing: 3px;
+  font-weight: 600;
+}
+
+.image-overlay {
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  text-align: center;
+  background-color: transparent; /* Background color with opacity */
+  /* Apply backdrop filter */
+  background-size: cover;
+  background-position: center;
+  color: whitesmoke; /* Text color */
+  padding: 20px; /* Add padding for better readability */
+  border-radius: 60px; /* Add rounded corners */
+  opacity: 1;
+  transition: opacity 0.5s ease;
+}
+
+.image-overlay h1 {
+  font-size: 3em;
+  margin-bottom: 20px;
+}
+
+.image-overlay p {
+  font-size: 1.2em;
+  text-align: justify;
+  margin: 0 auto;
+  max-width: 70%;
+}
+
+#section-2 {
+  background-color: #111315;
+  color: #ffffff;
+  font-size: 2.7em;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1em;
+}
+
+#section-2 h1 {
+  margin-bottom: 20px;
+}
+
+#section-2 p {
+  text-align: justify;
+  margin: 0 auto;
+  max-width: 70%;
+}
+
+/* Add CSS for login form */
+
+/* Container styling */
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* Form container styling */
+.formBx {
+    width: 600px;
+    padding: 40px;
+    position: relative;
+    text-align: center;
+    border-radius: 10px;
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.5);
+}
+
+/* Input field styling */
+/* Input field styling */
+.formBx input[type="text"],
+.formBx input[type="password"] {
+    width: calc(100% - 20px); /* Adjusted width */
+    padding: 12px; /* Adjusted padding */
+    margin: 15px 0;
+    border: none;
+    border-bottom: 2px solid #333;
+    outline: none;
+    font-size: 16px;
+    color: #333;
+    transition: border-color 0.3s;
+}
+
+.formBx input[type="text"]:focus,
+.formBx input[type="password"]:focus {
+    border-color: #007bff;
+}
+
+
+/* Button styling */
+.formBx button {
+    width: 100%;
+    padding: 10px;
+    margin: 20px 0;
+    border: none;
+    border-radius: 5px;
+    background: #007bff;
+    color: #fff;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.formBx button:hover {
+    background: #0056b3;
+}
+
+/* Link styling */
+.formBx a {
+    color: #333;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.formBx a:hover {
+    text-decoration: underline;
+}
+
+</style>
+</head>
+<body>
+<section id="section-1">
+    <div class="image-overlay">
+        <h1>Streamline Your Property Management Effortlessly</h1>
+        <p>Manage your property listings, client interactions, and transactions seamlessly with our intuitive property dealer management system.
+        Our system simplifies every aspect of property management</p>
+      </div>
+  <a id="scroll-btn" href="#section-2"></a>
+</section>
+<section id="section-2">
+ 
+  <div class="login-container">
+    <div class="user singinBx">
+        <div class="formBx">
+            {% if messages %}
+            <div class="alert alert-info">
+                {% for message in messages %}
+                    {{ message }}
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary">Sign In</button> <br> <br>
+            <a href="{% url 'blog:sign_up' %}" class="">Create an account</a>
+        </form>
+        </div>
+</div>
+</section>
+</body>
+</html>

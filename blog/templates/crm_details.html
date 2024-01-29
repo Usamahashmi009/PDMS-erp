@@ -1,0 +1,206 @@
+{% extends 'base/base.html' %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    
+    body {
+        font-family: 'Quicksand', sans-serif;
+        background-color: #f0f3f4;
+    }
+
+    .container {
+        margin-top: 20px;
+    }
+
+    h2 {
+        color: #3498db;
+    }
+
+    th, td {
+        text-align: center;
+        padding: 15px;
+    }
+
+    th {
+        background-color: #2c3e50;
+        color: #ecf0f1;
+        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .table tbody tr:hover {
+        background-color: #ecf0f1;
+    }
+
+    .btn-link {
+        color: #3498db;
+    }
+
+    .btn-link:hover {
+        text-decoration: underline;
+    }
+
+    .btn-primary {
+        background-color: #3498db;
+        border-color: #3498db;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        font-size: 10px; /* Adjust the font size here */
+        padding: 3px 8px; /* Adjust the padding here */
+    }
+
+    .btn-primary:hover {
+        background-color: #2980b9;
+        border-color: #2980b9;
+    }
+
+    .modal-header {
+        background-color: #2c3e50;
+        color: #ecf0f1;
+        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .modal-body img {
+        max-width: 100%;
+        height: auto;
+    }
+
+    /* Responsive Styles */
+    @media (max-width: 767px) {
+        th, td {
+            padding: 10px;
+        }
+
+        .btn-link, .btn-primary {
+            width: 100%;
+            margin-bottom: 10px;
+        }
+        .dol {
+          border-radius: 69px;
+          background: linear-gradient(145deg, #e1e1e1, #ffffff);
+          box-shadow:  37px 37px 61px #858585,
+                       -37px -37px 61px #ffffff;
+    }
+</style>
+</head>
+<body>
+
+  {% block content %}
+  <div class="container mt-4">
+      <h2>Profile Details</h2>
+      
+<div class="container">
+  <div class="row mb-4">
+    <div class="col-md-6">
+      <div class="card bg-primary text-white border-0 shadow h-100">
+        <div class="card-body">
+          <h5 class="card-title mb-4">Name:</h5>
+          <p class="card-text h4 font-weight-bold">{{ property_instance.profile_names.name }}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="card bg-info text-white border-0 shadow h-100">
+        <div class="card-body">
+          <h5 class="card-title mb-4">Contact:</h5>
+          <ul class="list-unstyled">
+            <li><i class="fas fa-phone-alt"></i> {{ property_instance.profile_names.mobile1 }}</li>
+            <li><i class="fas fa-mobile-alt"></i> {{ property_instance.profile_names.mobile2 }}</li>
+            <li><i class="fas fa-phone"></i> {{ property_instance.profile_names.landline }}</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mb-4">
+    <div class="col-md-6">
+      <div class="card bg-success text-white border-0 shadow h-100">
+        <div class="card-body">
+          <h5 class="card-title mb-4">Email:</h5>
+          <p class="card-text h6">
+            <i class="far fa-envelope me-2"></i> {{ property_instance.profile_names.email }}
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="card bg-warning text-dark border-0 shadow h-100">
+        <div class="card-body">
+          <h5 class="card-title mb-4">Address:</h5>
+          <p class="card-text">{{ property_instance.profile_names.address }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container mt-5">
+  <div class="card border-0 shadow p-4" style="background-color: #f8f9fa;">
+      <h2 class="card-title text-center mb-4 text-primary">CRM Form</h2>
+
+      <form method="post" action="{% url 'blog:crm_details' property_instance.id %}">
+          {% csrf_token %}
+
+          <div class="mb-4">
+              {{ crm_form.as_p }}
+          </div>
+
+          <div class="text-center">
+              <button type="submit" class="btn btn-primary ">Save Details</button>
+          </div>
+      </form>
+  </div>
+</div>
+
+
+
+
+
+
+
+ <!-- Display Associated Properties in a Table -->
+ <div class="table-responsive mt-3">
+  <table class="table table-bordered table-hover">
+      <thead class="thead-light">
+          <tr>
+              <th>Purpose</th>
+              <th>Name</th>
+              <th>Property Type</th>
+              <th>Size</th>
+              <th>Location</th>
+              <th>Contact</th>
+              <th>Price Range</th>
+              <th>View</th>
+          </tr>
+      </thead>
+      <tbody>
+          {% for property in associated_properties %}
+              <tr>
+                  <td>{{ property.persontype }}</td>
+                  <td>{{ property.profile_names.name }}</td>
+                  <td>{{ property.get_prop_type_display }}</td>
+                  <td>{{ property.prop_size }}</td>
+                  <td>{{ property.location }}</td>
+                  <td>{{ property.profile_names.mobile1 }} {{ property.profile_names.mobile2 }} {{ property.profile_names.landline }}</td>
+                  <td>{{ property.price_from }} - {{ property.price_to }}</td>
+                  <td>
+                      <a href="{% url 'blog:view_profile_details' property.id property.persontype %}" class="btn btn-primary btn-sm">
+                          View
+                      </a>
+                  </td>
+              </tr>
+          {% endfor %}
+      </tbody>
+  </table>
+</div>
+</div>
+{% endblock %}
+</body>
+</html>

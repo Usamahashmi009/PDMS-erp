@@ -1,0 +1,86 @@
+{% extends 'base/base.html' %}
+{% block content %}
+<style>
+  /* Custom CSS for input fields */
+  input[type="text"],
+  input[type="tel"],
+  input[type="email"],
+  input[type="url"],
+  input[type="password"],
+  textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    outline: none;
+    /* Add any other styling you need */
+  }
+  .container {
+    background-color:#f7f7f7;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    /* Add any other styling you need */
+  }
+  h5,label{
+    font-weight: bold;
+    color: gray;
+
+  }
+  input[type="text"]:focus,
+  input[type="tel"]:focus,
+  input[type="email"]:focus,
+  input[type="url"]:focus,
+  input[type="password"]:focus,
+  textarea:focus {
+    border-color: #007bff;
+    /* Change border color on focus */
+  }
+</style><br>
+<div class="container">
+
+  <h5>Create Profile</h5>
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="row mb-3">
+      <div class="col-md-4">
+        {{ form.name.label_tag }}
+        {{ form.name }}
+      </div>
+      <div class="col-md-4">
+        {{ form.mobile1.label_tag }}
+        {{ form.mobile1 }}
+      </div>
+      <div class="col-md-4">
+        {{ form.mobile2.label_tag }}
+        {{ form.mobile2 }}
+      </div>
+    </div>
+    <div class="row mb-3">
+      <div class="col-md-4">
+        {{ form.landline.label_tag }}
+        {{ form.landline }}
+      </div>
+      <div class="col-md-4">
+        {{ form.email.label_tag }}
+        {{ form.email }}
+      </div>
+      <div class="col-md-4">
+        {{ form.location.label_tag }}
+        {{ form.location }}
+      </div>
+     
+    </div>
+    <div class="row mb-3">
+      <div class="col-md-12">
+
+        {{ form.address.label_tag }}
+        {{ form.address }}
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+</div>
+{% endblock %}

@@ -1,0 +1,100 @@
+{% extends 'base/base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <!-- Include Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .dashboard-container {
+            margin-top: 50px;
+        }
+
+        .jumbotron {
+            background-color: #007bff;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            margin-bottom: 20px;
+        }
+
+        .card-header {
+            background-color: #007bff;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+{% block content %}
+<div class="container dashboard-container">
+    <div class="jumbotron">
+        <h1 class="display-4">Dashboard</h1>
+    </div>
+
+    <!-- Report 1: Number of client options in CRM model -->
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Client Options Report</h3>
+        </div>
+        <div class="card-body">
+            <ul class="list-group">
+                {% for report in crm_reports %}
+                    <li class="list-group-item">{{ report.client_options }}: {{ report.count }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+    <!-- Report 2: Number of properties to sell -->
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Properties to Sell</h3>
+        </div>
+        <div class="card-body">
+            {% for property in properties_to_sell %}
+                <p>Profile Name: {{ property.profile_names }}</p>
+                <p>Property Size: {{ property.prop_size }}</p>
+                <p>Location: {{ property.location }}</p>
+                <p>Price From: {{ property.price_from }}</p>
+                <!-- Add other details as needed -->
+                <hr>
+            {% endfor %}
+        </div>
+    </div>
+    
+    <!-- Report 3: Number of properties to purchase -->
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Properties to Purchase</h3>
+        </div>
+        <div class="card-body">
+            {% for property in properties_to_purchase %}
+                <p>Profile Name: {{ property.profile_names }}</p>
+                <p>Property Size: {{ property.prop_size }}</p>
+                <p>Location: {{ property.location }}</p>
+                <p>Price From: {{ property.price_from }}</p>
+                <!-- Add other details as needed -->
+                <hr>
+            {% endfor %}
+        </div>
+    </div>
+    
+{% endblock %}
+<!-- Include Bootstrap JS and Popper.js -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+</html>

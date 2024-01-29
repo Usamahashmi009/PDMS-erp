@@ -1,0 +1,123 @@
+{% extends 'base/base.html' %}
+{% block content %}
+
+<style>
+  /* Custom CSS for container */
+  .my-container {
+    background-color: #f7f7f7;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    /* Add any other styling you need */
+  }
+
+  /* Custom CSS for input fields */
+  input[type="text"],
+  input[type="tel"],
+  input[type="email"],
+  input[type="url"],
+  input[type="password"],
+  #id_profile_name,#id_main_prop,#id_prop_type,#id_prop_size,#id_image,#id_price_from,#id_price_to,#id_persontype,
+  textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    outline: none;
+    /* Add any other styling you need */
+  }
+
+  input[type="text"]:focus,
+  input[type="tel"]:focus,
+  input[type="email"]:focus,
+  input[type="url"]:focus,
+  input[type="password"]:focus,
+  textarea:focus {
+    border-color: #007bff;
+    /* Change border color on focus */
+  }h5,label{
+    font-weight: bold;
+    color: gray;
+
+  }
+</style><br>
+
+<div class="container my-container">
+  <h5>Add Property</h5>
+  <BR>
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="row mb-4">
+      <div class="col-md-4">
+        {{ form.profile_name.label_tag }}
+        {{ form.profile_names }}
+      </div>
+      <div class="col-md-4">
+        {{ form.main_prop.label_tag }}
+        {{ form.main_prop }}
+      </div>
+      <div class="col-md-4">
+        {{ form.prop_type.label_tag }}
+        {{ form.prop_type }}
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-md-2">
+        {{ form.size_unit.label_tag }}
+        {{ form.size_unit }}
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-md-4">
+        {{ form.prop_size.label_tag }}
+        {{ form.prop_size }}
+      </div>
+      <div class="col-md-4">
+        {{ form.location.label_tag }}
+        {{ form.location }}
+      </div>
+      <div class="col-md-4">
+        {{ form.image.label_tag }}
+        {{ form.image }}
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-md-4">
+        {{ form.price_from.label_tag }}
+        {{ form.price_from }}
+      </div>
+      <div class="col-md-4">
+        {{ form.price_to.label_tag }}
+        {{ form.price_to }}
+      </div>
+      <div class="col-md-4">
+        {{ form.persontype.label_tag }}
+        {{ form.persontype }}
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-md-12">
+        {{ form.description.label_tag }}
+        {{ form.description }}
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-md-4">
+        {{ form.installment.label_tag }}
+        {{ form.installment }}
+      </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+</div>
+
+
+{% endblock %}

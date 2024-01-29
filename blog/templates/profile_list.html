@@ -1,0 +1,109 @@
+{% extends 'base/base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Profile List</title>
+    <!-- Add Bootstrap CSS link here -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f8f9fa;
+        }
+
+        .main-content {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-header {
+            background-color: #f8f9fa;
+            border-bottom: none;
+        }
+
+        .card-body {
+            padding: 0;
+        }
+
+        .table {
+            min-width: 100%;
+            background-color: #fff;
+        }
+
+        .table thead th {
+            font-weight: 600;
+            color: #6c757d;
+            background-color: #f8f9fa;
+            border: none;
+        }
+
+        .table tbody td {
+            font-weight: 400;
+            color: #495057;
+            border: none;
+        }
+
+        .table-striped tbody tr:nth-of-type(odd) {
+            background-color: #f8f9fa;
+        }
+    </style>
+</head>
+<body>
+    {% block content %}
+    <div class="container mt-5">
+        <div class="main-content">
+            <div class="container mt-7">
+                <!-- Table -->
+                <div class="row">
+                    <div class="col">
+                        <div class="card shadow">
+                            <div class="card-header border-0">
+                                <h3 class="mb-0">Profile List</h3>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table align-items-center table-flush">
+                                        <thead class="thead-light">
+                                            <tr>
+                                                <th scope="col">Name</th>
+                                                <th scope="col">Mobile 1</th>
+                                                <th scope="col">Mobile 2</th>
+                                                <th scope="col">Landline</th>
+                                                <th scope="col">Email</th>
+                                                <th scope="col">Address</th>
+                                                <th scope="col">Location</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for profile in profiles %}
+                                            <tr>
+                                                <td>{{ profile.name }}</td>
+                                                <td>{{ profile.mobile1 }}</td>
+                                                <td>{{ profile.mobile2 }}</td>
+                                                <td>{{ profile.landline }}</td>
+                                                <td>{{ profile.email }}</td>
+                                                <td>{{ profile.address }}</td>
+                                                <td>{{ profile.location }}</td>
+                                                <!-- Add additional columns as needed -->
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endblock %}
+
+    <!-- Add Bootstrap JS and Popper.js scripts here -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
